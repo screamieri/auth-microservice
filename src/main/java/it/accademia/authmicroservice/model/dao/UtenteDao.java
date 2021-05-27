@@ -31,7 +31,7 @@ public class UtenteDao {
     public Utente findByUsernameAndPassword(String username, String password){
         
         Utente utente = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();
         
         try{       
             Query query = em.createNamedQuery("Utente.findByEmailAndPassword");
@@ -42,7 +42,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return utente;    
@@ -53,7 +52,7 @@ public class UtenteDao {
     public Utente findByUsernameAndPasswordAttivato(String username){
         
         Utente utente = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();
         
         try{       
             Query query = em.createNamedQuery("Utente.findByEmailAndStatoAttivo");
@@ -63,7 +62,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return utente;    
@@ -75,7 +73,7 @@ public class UtenteDao {
     public Utente findByEmailAndIdApplicazioneAndRuolo(String username, Integer idApplicazione, String ruolo){
         
         Utente utente = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();
         
         try{       
             Query query = em.createNamedQuery("Utente.findByEmailAndApplicazioneAndRuolo");
@@ -87,7 +85,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return utente;    
@@ -98,7 +95,7 @@ public class UtenteDao {
     public Utente findByEmailAndIdApplicazione(String username, Integer idApplicazione){
         
         Utente utente = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();
         
         try{       
             Query query = em.createNamedQuery("Utente.findByEmailAndApplicazione");
@@ -109,7 +106,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return utente;            
@@ -119,7 +115,7 @@ public class UtenteDao {
   
     public boolean addUser(Utente utente){
         boolean esito = true;
-        EntityManager em = Connection.getEntityManager();        
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();      
         try{       
             em.getTransaction().begin();
             em.persist(utente);            
@@ -129,7 +125,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         return esito;
         
@@ -137,7 +132,7 @@ public class UtenteDao {
     
     public boolean updateUser(Utente utente){
         boolean esito = true;
-        EntityManager em = Connection.getEntityManager();        
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();       
         try{                   
             em.getTransaction().begin();
             em.merge(utente);            
@@ -147,14 +142,13 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         return esito;        
     }
     
     public Utente findByEmail(String username){
         Utente utente = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();
         
         try{       
             Query query = em.createNamedQuery("Utente.findByEmail");
@@ -164,7 +158,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return utente; 
@@ -172,7 +165,7 @@ public class UtenteDao {
     
     public Utente findByTokenAttivazione(String token){
         Utente utente = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = Connection.getPersistenceSingletonInstance().getEntityManager();
         
         try{       
             Query query = em.createNamedQuery("Utente.findByToken");
@@ -182,7 +175,6 @@ public class UtenteDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return utente; 

@@ -18,7 +18,8 @@ import org.apache.logging.log4j.Logger;
  */
 public class Connection {
 
-   private static final Logger logger = LogManager.getLogger(Connection.class);
+    /*
+    private static final Logger logger = LogManager.getLogger(Connection.class);
 
     private static final EntityManagerFactory emFactoryObj;
     private static final String PERSISTENCE_UNIT_NAME = "springAuthentication";
@@ -37,6 +38,47 @@ public class Connection {
             logger.error(ex.getMessage());
         }
 
+        return em;
+    }   
+    */
+    
+    private static final Logger logger = LogManager.getLogger(Connection.class);
+
+    private static Connection persistenceSingletonInstance;
+    private EntityManager entityMgr;
+    
+    private static final String PERSISTENCE_UNIT_NAME = "springAuthentication";  
+    private static EntityManagerFactory emFactoryObj;
+    
+ 
+    private Connection() {} // costruttore
+    
+
+
+    public 
+    static 
+    Connection getPersistenceSingletonInstance() {
+        
+        
+        if (persistenceSingletonInstance == null) {
+
+            persistenceSingletonInstance = new Connection();
+            
+            try {
+                Connection.emFactoryObj = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+                persistenceSingletonInstance.entityMgr = Connection.emFactoryObj.createEntityManager();
+            }
+            catch (Exception oEx) {
+                persistenceSingletonInstance = null;  
+            }
+        }
+        
+        return persistenceSingletonInstance;
+    }    
+    
+    public EntityManager getEntityManager() {
+        EntityManager em = persistenceSingletonInstance.entityMgr;
+        em.getEntityManagerFactory().getCache().evictAll();
         return em;
     }
 
