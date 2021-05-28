@@ -30,7 +30,8 @@ public class ApplicazioneDao {
     
     public Applicazione findAppById(int id){
         Applicazione applicazione = null;        
-        EntityManager em = Connection.getEntityManager();
+        EntityManager em = PersistenceSingleton.getPersistenceSingletonInstance().getPersistenceConnection();
+        PersistenceSingleton.evictPersistenceCache();
         
         try{             
             applicazione = em.find(Applicazione.class, id);
@@ -38,7 +39,6 @@ public class ApplicazioneDao {
             logger.error(ex.getMessage());
         } finally{
             em.clear();
-            em.close();
         }
         
         return applicazione; 
